@@ -10,10 +10,14 @@ hello();
  const deliveryDate = today.add(7,'days');
  console.log(deliveryDate.format('dddd, MMMM D'));
 
-let cartSummaryHTML = '';
+ function renderOrderSummary(){
+
+ 
+
+  let cartSummaryHTML = '';
 
 
-cart.forEach((cartItem) => {
+  cart.forEach((cartItem) => {
 
 
 
@@ -41,7 +45,7 @@ cart.forEach((cartItem) => {
   const dataString = deliveryDate.format("dddd, MMMM D");
 
   cartSummaryHTML += `
-   <div class="cart-item-container
+    <div class="cart-item-container
     js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
@@ -82,10 +86,10 @@ cart.forEach((cartItem) => {
               </div>
             </div>
           </div>
-  
+
   `;
-}); 
-function deliveryOptionsHTML(matchingProduct,cartItem){
+  }); 
+  function deliveryOptionsHTML(matchingProduct,cartItem){
 
   let html ='';
 
@@ -113,10 +117,10 @@ function deliveryOptionsHTML(matchingProduct,cartItem){
                     name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
-                     ${dataString}
+                      ${dataString}
                     </div>
                     <div class="delivery-option-price">
-                     ${priceString} Shipping
+                      ${priceString} Shipping
                     </div>
                   </div>
                 </div>;
@@ -125,8 +129,8 @@ function deliveryOptionsHTML(matchingProduct,cartItem){
   });
   return html;
 
-}
-document.querySelectorAll(".js-delete-link").forEach((link) => {
+  }
+  document.querySelectorAll(".js-delete-link").forEach((link) => {
   link.addEventListener("click", () => {
     const productId = link.dataset.productId;
 
@@ -140,17 +144,22 @@ document.querySelectorAll(".js-delete-link").forEach((link) => {
     container.remove();
 
 
-  
-  });
-});
 
-document.querySelectorAll('js-delivery-option')
-.forEach((element) => {
+  });
+  });
+
+  document.querySelectorAll('js-delivery-option')
+  .forEach((element) => {
   element.addEventListener('click',() => {
     const {productId,deliveryOptionId} = element.dataset;
     updateDeliveryOption(productId,deliveryOptionsId);
+    renderOrderSummary();
 
 
   });
 
-});
+  });
+
+ }
+
+ renderOrderSummary();
